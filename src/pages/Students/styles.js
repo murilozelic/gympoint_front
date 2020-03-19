@@ -28,9 +28,9 @@ export const Container = styled.div`
     div {
       display: flex;
       align-items: center;
-      height: 40px;
+      height: 32px;
 
-      button {
+      a {
         height: 100%;
         display: flex;
         align-items: center;
@@ -39,14 +39,12 @@ export const Container = styled.div`
         background: #ee4d64;
         border-radius: 4px;
         margin-right: 20px;
+        margin-left: 5px;
 
-        span {
-          margin-left: 5px;
-          font-family: 'Roboto', sans-serif;
-          font-size: 14px;
-          font-weight: bold;
-          color: #fff;
-        }
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
       }
 
       > div {

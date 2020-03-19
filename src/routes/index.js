@@ -9,6 +9,7 @@ import Route from './Route';
 import SignIn from '../pages/SignIn';
 
 import Students from '../pages/Students';
+import StudentsForm from '../pages/StudentsForm';
 import GymPlans from '../pages/GymPlans';
 import Support from '../pages/Support';
 import Enrollment from '../pages/Enrollment';
@@ -20,7 +21,8 @@ export default function Routes() {
       <Route path="/" exact component={SignIn} />
 
       {/* Rotas que necessitam de autenticacao */}
-      <Route path="/students" component={Students} isPrivate />
+      <Route path="/students" exact component={Students} isPrivate />
+      <Route path="/students/register" component={StudentsForm} isPrivate />
       <Route path="/enrollments" component={Enrollment} isPrivate />
       <Route path="/gymplans" component={GymPlans} isPrivate />
       <Route path="/support" component={Support} isPrivate />

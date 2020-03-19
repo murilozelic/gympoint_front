@@ -1,5 +1,6 @@
 import React from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 import { Container } from './styles';
 
@@ -9,10 +10,10 @@ export default function Students() {
       <header>
         <p>Gerenciando alunos</p>
         <div>
-          <button type="button">
+          <Link to="/students/register">
             <MdAdd size={20} color="#fff" />
-            <span>CADASTRAR</span>
-          </button>
+            CADASTRAR
+          </Link>
           <div>
             <MdSearch size={16} color="#999" />
             <input type="text" placeholder="Buscar aluno" />
