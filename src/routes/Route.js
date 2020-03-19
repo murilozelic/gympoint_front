@@ -13,7 +13,7 @@ export default function RouterWrapper({
   isPrivate = false,
   ...rest
 }) {
-  const signed = false;
+  const signed = true;
 
   // Se usuario não está logado e a tela e privada, redireciona para a tela inicial, ou seja, tela de login.
   if (!signed && isPrivate) {
