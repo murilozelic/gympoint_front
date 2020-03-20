@@ -16,10 +16,12 @@ export default createGlobalStyle`
 
   html, body, #root {
     height: 100%;
+    
   }
 
   body {
     -webkit-font-smoothing: antialiased;
+    background: #eee;
   }
 
   body, input, button {
@@ -37,6 +39,5 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
-
 
 `;

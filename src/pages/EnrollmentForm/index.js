@@ -5,16 +5,11 @@ import history from '~/services/history';
 
 import { Container, Label } from './styles';
 
-// Utilizar o mesmo formulario para adicao e edicao de alunos
-// verificar se é adição pelo id.
-// id = 0 => adição
-// id > 0 => edição
-
-export default function StudentsForm() {
+export default function EnrollmentForm() {
   return (
     <Container>
       <header>
-        <strong>Cadastro de Aluno</strong>
+        <strong>Edição de matrícula</strong>
         <div>
           <button
             type="button"
@@ -32,22 +27,24 @@ export default function StudentsForm() {
       </header>
 
       <Form>
-        <Label>NOME COMPLETO</Label>
-        <Input name="name" placeholder="Nome Completo" />
-        <Label>ENDEREÇO DE E-MAIL</Label>
-        <Input name="email" placeholder="exemplo@rocketseat.com" />
+        <Label>ALUNO</Label>
+        <Input name="name" placeholder="Diego Fernandes" />
         <div>
           <div>
-            <Label>IDADE</Label>
-            <Input name="age" />
+            <Label>PLANO</Label>
+            <Input name="gymplan" />
           </div>
           <div>
-            <Label>PESO (em kg)</Label>
-            <Input name="weight" />
+            <Label>DATA DE INÍCIO</Label>
+            <Input name="init_date" />
           </div>
           <div>
-            <Label>ALTURA</Label>
-            <Input name="height" />
+            <Label>DATA DE TÉRMINO</Label>
+            <Input name="end_date" />
+          </div>
+          <div>
+            <Label>VALOR FINAL</Label>
+            <Input name="total_price" />
           </div>
         </div>
       </Form>

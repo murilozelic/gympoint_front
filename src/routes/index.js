@@ -11,8 +11,11 @@ import SignIn from '../pages/SignIn';
 import Students from '../pages/Students';
 import StudentsForm from '../pages/StudentsForm';
 import GymPlans from '../pages/GymPlans';
-import Support from '../pages/Support';
+import GymPlansForm from '../pages/GymPlansForm';
 import Enrollment from '../pages/Enrollment';
+import EnrollmentForm from '../pages/EnrollmentForm';
+
+import Support from '../pages/Support';
 
 export default function Routes() {
   return (
@@ -23,8 +26,10 @@ export default function Routes() {
       {/* Rotas que necessitam de autenticacao */}
       <Route path="/students" exact component={Students} isPrivate />
       <Route path="/students/register" component={StudentsForm} isPrivate />
-      <Route path="/enrollments" component={Enrollment} isPrivate />
-      <Route path="/gymplans" component={GymPlans} isPrivate />
+      <Route path="/enrollments" exact component={Enrollment} isPrivate />
+      <Route path="/enrollments/edit" component={EnrollmentForm} isPrivate />
+      <Route path="/gymplans" exact component={GymPlans} isPrivate />
+      <Route path="/gymplans/edit" component={GymPlansForm} isPrivate />
       <Route path="/support" component={Support} isPrivate />
 
       {/* Caso queira criar a funcionalidade de redirecionar o usuario para uma pagina
