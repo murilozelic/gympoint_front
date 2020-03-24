@@ -4,15 +4,12 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
 
   strong {
     padding: 20px 0;
-    font-family: 'Rotobo', sans-serif;
     font-size: 24px;
-    font-weight: bold;
   }
 
   ul {
