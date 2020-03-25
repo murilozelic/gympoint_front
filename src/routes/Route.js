@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import AuthLayout from '../pages/_layouts/auth';
 import DefaultLayout from '../pages/_layouts/default';
 
+import store from '~/store';
+
 // Aqui é criado um wrapper do route que contém todas as props do Route (acessadas através do ...rest)
 // e adicionamos a propriedade 'isPrivate' e a passamos em cada rota no index.js que será privada.
 
@@ -13,7 +15,7 @@ export default function RouterWrapper({
   isPrivate = false,
   ...rest
 }) {
-  const signed = true;
+  const { signed } = store.getState().auth;
 
   // Se usuario não está logado e a tela e privada, redireciona para a tela inicial, ou seja, tela de login.
   if (!signed && isPrivate) {

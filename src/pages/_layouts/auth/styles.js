@@ -32,11 +32,18 @@ export const Content = styled.div`
     flex-direction: column;
     padding: 30px;
 
-    span {
+    strong {
       text-align: left;
       font-weight: bold;
-      margin: 0 0 10px;
+      margin-bottom: 10px;
       color: #444;
+    }
+
+    span {
+      align-self: flex-start;
+      color: #ee4d64;
+      margin-bottom: 10px;
+      font-weight: bold;
     }
 
     input {
@@ -50,6 +57,10 @@ export const Content = styled.div`
 
       &::placeholder {
         color: #aaa;
+      }
+
+      &:focus {
+        border: 1px solid #999;
       }
     }
 

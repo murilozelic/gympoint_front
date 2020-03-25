@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import api from '~/services/api';
 
 import { Container } from './styles';
 
 export default function Students() {
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    async function loadStudents() {
+      const response = await api.get('students');
+
+      const data = response.data.map(student => {
+        return {
+          name: student.name,
+        };
+      });
+
+      setStudents(data);
+    }
+
+    loadStudents();
+  }, []);
+
   return (
     <Container>
       <header>
@@ -30,66 +49,23 @@ export default function Students() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Murilo Zelic</td>
-            <td>murilozelic@gmail.com</td>
-            <td>20</td>
-            <td>
-              <button type="button" className="editStudentGridBtn">
-                editar
-              </button>
-            </td>
-            <td>
-              <button type="button" className="deleteStudentGridBtn">
-                apagar
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>asdasd</td>
-            <td>asdasd.com</td>
-            <td>20</td>
-            <td>
-              <button type="button" className="editStudentGridBtn">
-                editar
-              </button>
-            </td>
-            <td>
-              <button type="button" className="deleteStudentGridBtn">
-                apagar
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>asdasd</td>
-            <td>asdasd.com</td>
-            <td>20</td>
-            <td>
-              <button type="button" className="editStudentGridBtn">
-                editar
-              </button>
-            </td>
-            <td>
-              <button type="button" className="deleteStudentGridBtn">
-                apagar
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>MuriloMuriloMuMuriloMiloMuriloMuriloMurilo</td>
-            <td>silgmailgmailgmgmailgmailgmailgmail.com</td>
-            <td>20</td>
-            <td>
-              <button type="button" className="editStudentGridBtn">
-                editar
-              </button>
-            </td>
-            <td>
-              <button type="button" className="deleteStudentGridBtn">
-                apagar
-              </button>
-            </td>
-          </tr>
+          {students.map(student => (
+            <tr>
+              <td>{student.name}</td>
+              <td>murilozelic@gmail.com</td>
+              <td>20</td>
+              <td>
+                <button type="button" className="editStudentGridBtn">
+                  editar
+                </button>
+              </td>
+              <td>
+                <button type="button" className="deleteStudentGridBtn">
+                  apagar
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </Container>
