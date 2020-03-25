@@ -10,7 +10,8 @@ import { Container, Label } from './styles';
 // id = 0 => adição
 // id > 0 => edição
 
-export default function StudentsForm() {
+export default function StudentsForm({ id }) {
+  console.log('id');
   return (
     <Container>
       <header>

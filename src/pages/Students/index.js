@@ -1,28 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import api from '~/services/api';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadStudentsRequest } from '~/store/modules/student/actions';
+import history from '~/services/history';
 
 import { Container } from './styles';
 
 export default function Students() {
-  const [students, setStudents] = useState([]);
+  const students = useSelector(state => state.student.students);
+  const dispatch = useDispatch();
+
+  function handleEditStudent(id) {
+    history.push('/students/edit', id);
+  }
 
   useEffect(() => {
-    async function loadStudents() {
-      const response = await api.get('students');
-
-      const data = response.data.map(student => {
-        return {
-          name: student.name,
-        };
-      });
-
-      setStudents(data);
-    }
-
-    loadStudents();
-  }, []);
+    dispatch(loadStudentsRequest());
+  }, []); // eslint-disable-line
 
   return (
     <Container>
@@ -49,23 +44,37 @@ export default function Students() {
           </tr>
         </thead>
         <tbody>
-          {students.map(student => (
+          {students.length > 0 ? (
+            students.map(student => (
+              <tr key={student.id}>
+                <td>{student.name}</td>
+                <td>{student.email}</td>
+                <td>{student.age}</td>
+                <td>
+                  <button
+                    type="button"
+                    className="editStudentGridBtn"
+                    onClick={() => handleEditStudent(student.id)}
+                  >
+                    editar
+                  </button>
+                </td>
+                <td>
+                  <button type="button" className="deleteStudentGridBtn">
+                    apagar
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
             <tr>
-              <td>{student.name}</td>
-              <td>murilozelic@gmail.com</td>
-              <td>20</td>
-              <td>
-                <button type="button" className="editStudentGridBtn">
-                  editar
-                </button>
-              </td>
-              <td>
-                <button type="button" className="deleteStudentGridBtn">
-                  apagar
-                </button>
-              </td>
+              <td>Não há estudantes cadastrados</td>
+              <td>-</td>
+              <td>-</td>
+              <td />
+              <td />
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </Container>

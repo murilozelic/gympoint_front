@@ -25,7 +25,7 @@ export default function Routes() {
 
       {/* Rotas que necessitam de autenticacao */}
       <Route path="/students" exact component={Students} isPrivate />
-      <Route path="/students/register" component={StudentsForm} isPrivate />
+      <Route path="/students/edit" component={StudentsForm} isPrivate />
       <Route path="/enrollments" exact component={Enrollment} isPrivate />
       <Route path="/enrollments/edit" component={EnrollmentForm} isPrivate />
       <Route path="/gymplans" exact component={GymPlans} isPrivate />
