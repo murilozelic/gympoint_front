@@ -18,4 +18,11 @@ export function* loadStudentsRequest() {
   }
 }
 
-export default all([takeLatest('@student/LOAD_REQUEST', loadStudentsRequest)]);
+export function editStudentRequest({ payload }) {
+  history.push(`/students/${payload.id}/edit`);
+}
+
+export default all([
+  takeLatest('@student/LOAD_REQUEST', loadStudentsRequest),
+  takeLatest('@student/EDIT_REQUEST', editStudentRequest),
+]);

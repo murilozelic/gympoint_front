@@ -1,6 +1,9 @@
 import React from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { MdDone, MdChevronLeft } from 'react-icons/md';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import * as Yup from 'yup';
 import history from '~/services/history';
 
 import { Container, Label } from './styles';
@@ -10,8 +13,32 @@ import { Container, Label } from './styles';
 // id = 0 => adição
 // id > 0 => edição
 
-export default function StudentsForm({ id }) {
-  console.log('id');
+const schema = Yup.object().shape({
+  name: Yup.string(),
+  email: Yup.string().email(),
+  age: Yup.number(),
+  weight: Yup.number(),
+  height: Yup.number(),
+});
+
+export default function StudentForm() {
+  const { id } = useParams();
+
+  // Como o student já está no reducer, não é necessário uma chamada de api
+  // para editar.
+  const students = useSelector(state => state.student.students);
+
+  // Verifica se id veio dos params e popula a const student.
+  // Faz um filtro no reducer procurando o student pelo id.
+  // Como filter retorna um array, basta selecionar o primeiro elemento.
+  const student = id ? students.filter(s => s.id === Number(id))[0] : null;
+
+  const initialData = student || null;
+
+  function handleSubmit() {
+    // console.log('a');
+  }
+
   return (
     <Container>
       <header>
@@ -25,14 +52,19 @@ export default function StudentsForm({ id }) {
             <MdChevronLeft size={20} color="#fff" />
             VOLTAR
           </button>
-          <button type="button" className="saveBtn">
+          <button className="saveBtn" type="submit" form="studentForm">
             <MdDone size={20} color="#fff" />
             SALVAR
           </button>
         </div>
       </header>
 
-      <Form>
+      <Form
+        id="studentForm"
+        schema={schema}
+        initialData={initialData}
+        onSubmit={handleSubmit}
+      >
         <Label>NOME COMPLETO</Label>
         <Input name="name" placeholder="Nome Completo" />
         <Label>ENDEREÇO DE E-MAIL</Label>

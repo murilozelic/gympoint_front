@@ -10,3 +10,10 @@ export function loadStudentsSuccess(students) {
     payload: { students },
   };
 }
+
+export function editStudentRequest(id) {
+  return {
+    type: '@student/EDIT_REQUEST',
+    payload: { id },
+  };
+}

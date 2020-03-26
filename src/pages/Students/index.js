@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadStudentsRequest } from '~/store/modules/student/actions';
-import history from '~/services/history';
+import {
+  loadStudentsRequest,
+  editStudentRequest,
+} from '~/store/modules/student/actions';
 
 import { Container } from './styles';
 
@@ -12,7 +14,7 @@ export default function Students() {
   const dispatch = useDispatch();
 
   function handleEditStudent(id) {
-    history.push('/students/edit', id);
+    dispatch(editStudentRequest(id));
   }
 
   useEffect(() => {
@@ -24,7 +26,7 @@ export default function Students() {
       <header>
         <p>Gerenciando alunos</p>
         <div>
-          <Link to="/students/register">
+          <Link to="/students/registration">
             <MdAdd size={20} color="#fff" />
             CADASTRAR
           </Link>

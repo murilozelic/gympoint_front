@@ -9,9 +9,9 @@ import Route from './Route';
 import SignIn from '../pages/SignIn';
 
 import Students from '../pages/Students';
-import StudentsForm from '../pages/StudentsForm';
+import StudentsForm from '../pages/StudentForm';
 import GymPlans from '../pages/GymPlans';
-import GymPlansForm from '../pages/GymPlansForm';
+import GymPlansForm from '../pages/GymPlanForm';
 import Enrollment from '../pages/Enrollment';
 import EnrollmentForm from '../pages/EnrollmentForm';
 
@@ -25,18 +25,21 @@ export default function Routes() {
 
       {/* Rotas que necessitam de autenticacao */}
       <Route path="/students" exact component={Students} isPrivate />
-      <Route path="/students/edit" component={StudentsForm} isPrivate />
+      <Route path="/students/registration" component={StudentsForm} isPrivate />
+      <Route path="/students/:id/edit" component={StudentsForm} isPrivate />
+
       <Route path="/enrollments" exact component={Enrollment} isPrivate />
       <Route path="/enrollments/edit" component={EnrollmentForm} isPrivate />
+
       <Route path="/gymplans" exact component={GymPlans} isPrivate />
       <Route path="/gymplans/edit" component={GymPlansForm} isPrivate />
-      <Route path="/support" component={Support} isPrivate />
 
+      <Route path="/support" component={Support} isPrivate />
       {/* Caso queira criar a funcionalidade de redirecionar o usuario para uma pagina
       caso ele tente acessar uma rota inexistente, utilizar a sintaxe abaixo:
 
-      <Route path="/" component={() => <h1>404</h1>} /> 
-      
+      <Route path="/" component={() => <h1>404</h1>} />
+
       */}
     </Switch>
   );
