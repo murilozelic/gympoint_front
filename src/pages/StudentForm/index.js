@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { MdDone, MdChevronLeft } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import history from '~/services/history';
 
@@ -23,10 +23,11 @@ const schema = Yup.object().shape({
 
 export default function StudentForm() {
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   // Como o student já está no reducer, não é necessário uma chamada de api
   // para editar.
-  const students = useSelector(state => state.student.students);
+  const students = useSelector(state => state.student.students.data);
 
   // Verifica se id veio dos params e popula a const student.
   // Faz um filtro no reducer procurando o student pelo id.
@@ -35,7 +36,7 @@ export default function StudentForm() {
 
   const initialData = student || null;
 
-  function handleSubmit() {
+  function handleFormSubmit() {
     // console.log('a');
   }
 
@@ -63,7 +64,7 @@ export default function StudentForm() {
         id="studentForm"
         schema={schema}
         initialData={initialData}
-        onSubmit={handleSubmit}
+        onSubmit={handleFormSubmit}
       >
         <Label>NOME COMPLETO</Label>
         <Input name="name" placeholder="Nome Completo" />

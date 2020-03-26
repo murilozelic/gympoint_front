@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import api from '~/services/api';
 import history from '~/services/history';
 
-import { loadStudentsSuccess } from './actions';
+import { loadStudentsSuccess, deleteStudentsSuccess } from './actions';
 
 export function* loadStudentsRequest() {
   try {
@@ -18,11 +18,26 @@ export function* loadStudentsRequest() {
   }
 }
 
+export function* deleteStudentRequest({ payload }) {
+  const { id } = payload;
+
+  try {
+    yield call(api.delete, `students/${id}`);
+
+    yield put(deleteStudentsSuccess(id));
+  } catch (err) {
+    toast.error(`Nao foi possivel deletar este usuario`);
+  }
+}
+
 export function editStudentRequest({ payload }) {
-  history.push(`/students/${payload.id}/edit`);
+  const { id } = payload;
+
+  history.push(`/students/${id}/edit`);
 }
 
 export default all([
   takeLatest('@student/LOAD_REQUEST', loadStudentsRequest),
   takeLatest('@student/EDIT_REQUEST', editStudentRequest),
+  takeLatest('@student/DELETE_REQUEST', deleteStudentRequest),
 ]);

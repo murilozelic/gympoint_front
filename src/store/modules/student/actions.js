@@ -17,3 +17,24 @@ export function editStudentRequest(id) {
     payload: { id },
   };
 }
+
+export function editStudentSuccess(student) {
+  return {
+    type: '@student/EDIT_SUCCESS',
+    payload: { student },
+  };
+}
+
+export function deleteStudentRequest(id) {
+  return {
+    type: '@student/DELETE_REQUEST',
+    payload: { id },
+  };
+}
+
+export function deleteStudentsSuccess(id) {
+  return {
+    type: '@student/DELETE_SUCCESS',
+    payload: { id },
+  };
+}

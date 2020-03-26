@@ -2,10 +2,13 @@ import React, { useEffect } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import Alert from '~/utils/Alert';
+
 import {
   loadStudentsRequest,
-  editStudentRequest,
+  deleteStudentRequest,
 } from '~/store/modules/student/actions';
+import history from '~/services/history';
 
 import { Container } from './styles';
 
@@ -14,7 +17,15 @@ export default function Students() {
   const dispatch = useDispatch();
 
   function handleEditStudent(id) {
-    dispatch(editStudentRequest(id));
+    history.push(`/students/${id}/edit`);
+  }
+
+  function handleDeleteStudent(id) {
+    Alert.delete().then(result => {
+      if (result.value) {
+        dispatch(deleteStudentRequest(id));
+      }
+    });
   }
 
   useEffect(() => {
@@ -46,8 +57,8 @@ export default function Students() {
           </tr>
         </thead>
         <tbody>
-          {students.length > 0 ? (
-            students.map(student => (
+          {students.data.length > 0 ? (
+            students.data.map(student => (
               <tr key={student.id}>
                 <td>{student.name}</td>
                 <td>{student.email}</td>
@@ -62,7 +73,11 @@ export default function Students() {
                   </button>
                 </td>
                 <td>
-                  <button type="button" className="deleteStudentGridBtn">
+                  <button
+                    type="button"
+                    className="deleteStudentGridBtn"
+                    onClick={() => handleDeleteStudent(student.id)}
+                  >
                     apagar
                   </button>
                 </td>
