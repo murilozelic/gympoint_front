@@ -41,7 +41,6 @@ export default function student(state = INITIAL_STATE, action) {
         break;
       }
       case '@student/CREATE_REQUEST': {
-        draft.students.push(action.payload.student);
         draft.loading = true;
         break;
       }

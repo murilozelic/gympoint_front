@@ -76,7 +76,7 @@ export default function Students() {
         <tbody>
           {student.students.length > 0 ? (
             student.students.map(s => (
-              <tr key={s.id}>
+              <tr key={String(s.id)}>
                 <td>{s.name}</td>
                 <td>{s.email}</td>
                 <td>{s.age}</td>

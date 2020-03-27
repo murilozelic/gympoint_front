@@ -1,4 +1,4 @@
-import { all, takeLatest, call, put, take } from 'redux-saga/effects';
+import { all, takeLatest, call, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import api from '~/services/api';
 import history from '~/services/history';
@@ -122,8 +122,8 @@ export function* createStudentsRequest({ payload }) {
       const { id } = response.data.newStudent;
 
       const newStudent = {
-        ...student,
         id,
+        ...student,
       };
 
       yield put(createStudentSuccess(newStudent));
