@@ -7,8 +7,9 @@ import Alert from '~/utils/Alert';
 import {
   loadStudentsRequest,
   deleteStudentRequest,
+  loadStudentRequest,
 } from '~/store/modules/student/actions';
-import history from '~/services/history';
+/* import history from '~/services/history'; */
 
 import { Container } from './styles';
 
@@ -16,8 +17,12 @@ export default function Students() {
   const students = useSelector(state => state.student.students);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(loadStudentsRequest());
+  }, []); // eslint-disable-line
+
   function handleEditStudent(id) {
-    history.push(`/students/${id}/edit`);
+    dispatch(loadStudentRequest(id));
   }
 
   function handleDeleteStudent(id) {
@@ -27,10 +32,6 @@ export default function Students() {
       }
     });
   }
-
-  useEffect(() => {
-    dispatch(loadStudentsRequest());
-  }, []); // eslint-disable-line
 
   return (
     <Container>
@@ -57,8 +58,8 @@ export default function Students() {
           </tr>
         </thead>
         <tbody>
-          {students.data.length > 0 ? (
-            students.data.map(student => (
+          {students.length > 0 ? (
+            students.map(student => (
               <tr key={student.id}>
                 <td>{student.name}</td>
                 <td>{student.email}</td>

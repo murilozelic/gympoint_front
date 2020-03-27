@@ -73,7 +73,7 @@ export const Container = styled.div`
 
     div {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
 
       & div {
@@ -90,6 +90,14 @@ export const Container = styled.div`
         input {
           width: 100%;
         }
+      }
+    }
+    span {
+      color: #f00;
+      padding-left: 5px;
+      margin-top: 5px;
+      &:before {
+        content: '- ';
       }
     }
   }

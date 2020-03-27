@@ -18,9 +18,23 @@ export function editStudentRequest(id) {
   };
 }
 
-export function editStudentSuccess(student) {
+export function editStudentSuccess(id) {
   return {
     type: '@student/EDIT_SUCCESS',
+    payload: { id },
+  };
+}
+
+export function loadStudentRequest(id) {
+  return {
+    type: '@student/SINGLE_LOAD_REQUEST',
+    payload: { id },
+  };
+}
+
+export function loadStudentSuccess(student) {
+  return {
+    type: '@student/SINGLE_LOAD_SUCCESS',
     payload: { student },
   };
 }
@@ -32,7 +46,7 @@ export function deleteStudentRequest(id) {
   };
 }
 
-export function deleteStudentsSuccess(id) {
+export function deleteStudentSuccess(id) {
   return {
     type: '@student/DELETE_SUCCESS',
     payload: { id },

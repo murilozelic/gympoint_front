@@ -4,7 +4,7 @@ import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal);
 
 const Alert = {
-  delete: async () => {
+  delete: () => {
     return MySwal.fire({
       title: 'Deletar estudante?',
       text: 'Esta ação no poderá ser revertida!',

@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { MdDone, MdChevronLeft } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import history from '~/services/history';
 
@@ -13,31 +13,52 @@ import { Container, Label } from './styles';
 // id = 0 => adição
 // id > 0 => edição
 
-const schema = Yup.object().shape({
-  name: Yup.string(),
-  email: Yup.string().email(),
-  age: Yup.number(),
-  weight: Yup.number(),
-  height: Yup.number(),
-});
-
 export default function StudentForm() {
   const { id } = useParams();
-  const dispatch = useDispatch();
+
+  const schema = Yup.object().shape({
+    name: Yup.string().required('É necessário um nome'),
+    email: Yup.string()
+      .email('Digite um e-mail válido.')
+      .required('É necessário um e-mail'),
+    age: Yup.number()
+      .min(0, 'A idade deve ser maior ou igual a 0')
+      .typeError('A idade é obrigatória')
+      .required('A idade é obrigatória'),
+    weight: Yup.number()
+      .required('Número inválido')
+      .min(0, 'O peso deve ser maior ou igual a 0')
+      .typeError('O peso é obrigatório')
+      .required('O peso é obrigatório'),
+    height: Yup.number()
+      .required('Número inválido')
+      .min(0, 'A altura deve ser maior ou igual a 0')
+      .typeError('A altura é obrigatória')
+      .required('A altura é obrigatória'),
+  });
 
   // Como o student já está no reducer, não é necessário uma chamada de api
   // para editar.
-  const students = useSelector(state => state.student.students.data);
+  const student = useSelector(state => state.student.student);
 
   // Verifica se id veio dos params e popula a const student.
   // Faz um filtro no reducer procurando o student pelo id.
   // Como filter retorna um array, basta selecionar o primeiro elemento.
-  const student = id ? students.filter(s => s.id === Number(id))[0] : null;
+  const initialData = id ? student : null;
 
-  const initialData = student || null;
-
-  function handleFormSubmit() {
-    // console.log('a');
+  async function handleFormSubmit(data) {
+    try {
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+      // Validation passed
+      // console.log(data);
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        // Validation failed
+        // console.log(err);
+      }
+    }
   }
 
   return (
@@ -62,9 +83,13 @@ export default function StudentForm() {
 
       <Form
         id="studentForm"
-        schema={schema}
         initialData={initialData}
         onSubmit={handleFormSubmit}
+        schema={schema}
+        onKeyPress={e => {
+          /* Evita de submit o Form com a tecla Enter nos inputs */
+          if (e.key === 'Enter') e.preventDefault();
+        }}
       >
         <Label>NOME COMPLETO</Label>
         <Input name="name" placeholder="Nome Completo" />
@@ -73,15 +98,15 @@ export default function StudentForm() {
         <div>
           <div>
             <Label>IDADE</Label>
-            <Input name="age" />
+            <Input name="age" type="number" step="1" />
           </div>
           <div>
             <Label>PESO (em kg)</Label>
-            <Input name="weight" />
+            <Input name="weight" type="number" step="0.1" />
           </div>
           <div>
             <Label>ALTURA</Label>
-            <Input name="height" />
+            <Input name="height" type="number" step="0.01" />
           </div>
         </div>
       </Form>
