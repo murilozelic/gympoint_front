@@ -27,7 +27,7 @@ export default function StudentForm() {
       .email('Digite um e-mail válido.')
       .required('É necessário um e-mail'),
     age: Yup.number()
-      .min(0, 'A idade deve ser maior ou igual a 0')
+      .min(16, 'A idade deve ser maior ou igual a 16 anos')
       .typeError('A idade é obrigatória')
       .required('A idade é obrigatória'),
     weight: Yup.number()
@@ -59,8 +59,8 @@ export default function StudentForm() {
         abortEarly: false,
       });
 
-      if (data.id) {
-        dispatch(editStudentRequest(data));
+      if (id) {
+        dispatch(editStudentRequest({ ...data, id }));
       } else {
         dispatch(createStudentRequest(data));
       }
@@ -76,7 +76,7 @@ export default function StudentForm() {
   return (
     <Container>
       <header>
-        <strong>Cadastro de Aluno</strong>
+        <strong>{id ? 'Edição de Aluno' : 'Cadastro de Aluno'}</strong>
         <div>
           <button
             type="button"
@@ -99,7 +99,7 @@ export default function StudentForm() {
         schema={schema}
         onSubmit={handleFormSubmit}
         onKeyPress={e => {
-          /*	 a tecla Enter nos inputs */
+          /*	Evita de dar submit no form usando a tecla Enter nos inputs */
           if (e.key === 'Enter') e.preventDefault();
         }}
       >

@@ -8,13 +8,15 @@ import {
   loadStudentsRequest,
   deleteStudentRequest,
   loadStudentRequest,
+  searchStudentsRequest,
 } from '~/store/modules/student/actions';
 /* import history from '~/services/history'; */
 
 import { Container } from './styles';
 
 export default function Students() {
-  const students = useSelector(state => state.student.students);
+  const student = useSelector(state => state.student);
+  const searching = student.searchStudents;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,6 +35,16 @@ export default function Students() {
     });
   }
 
+  function handleSearchStudent(e) {
+    const { value: searchStudent } = e.target;
+
+    if (searchStudent) {
+      dispatch(searchStudentsRequest(searchStudent));
+    } else {
+      dispatch(loadStudentsRequest());
+    }
+  }
+
   return (
     <Container>
       <header>
@@ -44,7 +56,11 @@ export default function Students() {
           </Link>
           <div>
             <MdSearch size={16} color="#999" />
-            <input type="text" placeholder="Buscar aluno" />
+            <input
+              type="text"
+              placeholder="Buscar aluno"
+              onChange={handleSearchStudent}
+            />
           </div>
         </div>
       </header>
@@ -58,17 +74,17 @@ export default function Students() {
           </tr>
         </thead>
         <tbody>
-          {students.length > 0 ? (
-            students.map(student => (
-              <tr key={student.name}>
-                <td>{student.name}</td>
-                <td>{student.email}</td>
-                <td>{student.age}</td>
+          {student.students.length > 0 ? (
+            student.students.map(s => (
+              <tr key={s.id}>
+                <td>{s.name}</td>
+                <td>{s.email}</td>
+                <td>{s.age}</td>
                 <td>
                   <button
                     type="button"
                     className="editStudentGridBtn"
-                    onClick={() => handleEditStudent(student.id)}
+                    onClick={() => handleEditStudent(s.id)}
                   >
                     editar
                   </button>
@@ -77,7 +93,7 @@ export default function Students() {
                   <button
                     type="button"
                     className="deleteStudentGridBtn"
-                    onClick={() => handleDeleteStudent(student.id)}
+                    onClick={() => handleDeleteStudent(s.id)}
                   >
                     apagar
                   </button>
@@ -86,7 +102,11 @@ export default function Students() {
             ))
           ) : (
             <tr>
-              <td>Não há estudantes cadastrados</td>
+              <td>
+                {searching
+                  ? 'Não há foram encontrados estudantes com esse nome'
+                  : 'Não há estudantes cadastrados'}
+              </td>
               <td>-</td>
               <td>-</td>
               <td />

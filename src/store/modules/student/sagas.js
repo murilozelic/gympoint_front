@@ -1,4 +1,4 @@
-import { all, takeLatest, call, put } from 'redux-saga/effects';
+import { all, takeLatest, call, put, take } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import api from '~/services/api';
 import history from '~/services/history';
@@ -9,18 +9,30 @@ import {
   loadStudentSuccess,
   editStudentSuccess,
   createStudentSuccess,
+  searchStudentsSuccess,
 } from './actions';
 
 export function* loadStudentsRequest() {
   try {
     const response = yield call(api.get, 'students');
 
-    const students = response.data;
+    // Evitar de popular o store.students com um objeto.
+    // Caso o retorno do servidor possua o status, quer dizer que não há
+    // estudantes cadastrados, neste caso, deixa oW array vazio.
+    if (response.data.status) {
+      yield put(loadStudentsSuccess([]));
+    } else {
+      const students = response.data;
 
-    if (students) yield put(loadStudentsSuccess(students));
+      yield put(loadStudentsSuccess(students));
+    }
   } catch (err) {
-    toast.error('Nao foi possivel carregar os usuarios');
-    history.push('/');
+    if (err.status) {
+      toast.error('Não foi possível carregar os usuários');
+    } else {
+      // Quando o axios retornar 'Network error'
+      toast.error('Verifique a conexão com o servidor');
+    }
   }
 }
 
@@ -78,11 +90,15 @@ export function* editStudentRequest({ payload }) {
       height: height * 100,
     });
 
-    yield put(editStudentSuccess(response.data));
+    if (!response.data.error) {
+      yield put(editStudentSuccess(response.data));
 
-    toast.success(`Usuário atualizado com sucesso`);
+      toast.success(`Usuário atualizado com sucesso`);
 
-    history.push(`/students`);
+      history.push(`/students`);
+    } else {
+      toast.error(`Este e-mail já está em uso.`);
+    }
   } catch (err) {
     toast.error(`Não foi possível editar este usuário`);
   }
@@ -100,15 +116,40 @@ export function* createStudentsRequest({ payload }) {
       height: height * 100,
     };
 
-    yield call(api.post, 'students', student);
+    const response = yield call(api.post, 'students', student);
 
-    yield put(createStudentSuccess(student));
+    if (response.data.newStudent) {
+      const { id } = response.data.newStudent;
 
-    toast.success(`Usuário criado com sucesso`);
+      const newStudent = {
+        ...student,
+        id,
+      };
 
-    history.push(`/students`);
+      yield put(createStudentSuccess(newStudent));
+
+      toast.success(`Usuário criado com sucesso`);
+
+      history.push(`/students`);
+    } else {
+      toast.error(`E-mail ja utilizado`);
+    }
   } catch (err) {
-    toast.error(`Não foi possível editar este usuário`);
+    toast.error(`Não foi possível criar este usuário`);
+  }
+}
+
+export function* searchStudentsRequest({ payload }) {
+  try {
+    const { student } = payload;
+
+    const response = yield call(api.get, `students?student=${student}`);
+
+    const foundStudents = response.data.status ? [] : response.data;
+
+    yield put(searchStudentsSuccess(foundStudents));
+  } catch (err) {
+    toast.error(`Não foi possível encontrar este usuário`);
   }
 }
 
@@ -118,4 +159,5 @@ export default all([
   takeLatest('@student/DELETE_REQUEST', deleteStudentRequest),
   takeLatest('@student/SINGLE_LOAD_REQUEST', loadStudentRequest),
   takeLatest('@student/CREATE_REQUEST', createStudentsRequest),
+  takeLatest('@student/SEARCH_REQUEST', searchStudentsRequest),
 ]);

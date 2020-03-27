@@ -66,3 +66,17 @@ export function createStudentSuccess(student) {
     payload: { student },
   };
 }
+
+export function searchStudentsRequest(student) {
+  return {
+    type: '@student/SEARCH_REQUEST',
+    payload: { student },
+  };
+}
+
+export function searchStudentsSuccess(students) {
+  return {
+    type: '@student/SEARCH_SUCCESS',
+    payload: { students },
+  };
+}
