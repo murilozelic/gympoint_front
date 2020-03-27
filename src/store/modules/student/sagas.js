@@ -7,6 +7,8 @@ import {
   loadStudentsSuccess,
   deleteStudentSuccess,
   loadStudentSuccess,
+  editStudentSuccess,
+  createStudentSuccess,
 } from './actions';
 
 export function* loadStudentsRequest() {
@@ -35,9 +37,9 @@ export function* deleteStudentRequest({ payload }) {
 }
 
 export function* loadStudentRequest({ payload }) {
-  const { id } = payload;
-
   try {
+    const { id } = payload;
+
     const response = yield call(api.get, `students`);
 
     const students = response.data;
@@ -60,12 +62,54 @@ export function* loadStudentRequest({ payload }) {
 
     history.push(`/students/${id}/edit`);
   } catch (err) {
-    toast.error(`Nao foi possivel deletar este usuario`);
+    toast.error(`Não foi possível carregar este usuário`);
   }
 }
 
 export function* editStudentRequest({ payload }) {
-  /* history.push(`/students/${id}/edit`); */
+  try {
+    const { id, name, email, age, weight, height } = payload.student;
+
+    const response = yield call(api.put, `students/${id}`, {
+      name,
+      email,
+      age,
+      weight: weight.toFixed(0),
+      height: height * 100,
+    });
+
+    yield put(editStudentSuccess(response.data));
+
+    toast.success(`Usuário atualizado com sucesso`);
+
+    history.push(`/students`);
+  } catch (err) {
+    toast.error(`Não foi possível editar este usuário`);
+  }
+}
+
+export function* createStudentsRequest({ payload }) {
+  try {
+    const { name, email, age, weight, height } = payload.student;
+
+    const student = {
+      name,
+      email,
+      age,
+      weight: weight.toFixed(0),
+      height: height * 100,
+    };
+
+    yield call(api.post, 'students', student);
+
+    yield put(createStudentSuccess(student));
+
+    toast.success(`Usuário criado com sucesso`);
+
+    history.push(`/students`);
+  } catch (err) {
+    toast.error(`Não foi possível editar este usuário`);
+  }
 }
 
 export default all([
@@ -73,4 +117,5 @@ export default all([
   takeLatest('@student/EDIT_REQUEST', editStudentRequest),
   takeLatest('@student/DELETE_REQUEST', deleteStudentRequest),
   takeLatest('@student/SINGLE_LOAD_REQUEST', loadStudentRequest),
+  takeLatest('@student/CREATE_REQUEST', createStudentsRequest),
 ]);

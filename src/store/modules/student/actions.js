@@ -11,17 +11,17 @@ export function loadStudentsSuccess(students) {
   };
 }
 
-export function editStudentRequest(id) {
+export function editStudentRequest(student) {
   return {
     type: '@student/EDIT_REQUEST',
-    payload: { id },
+    payload: { student },
   };
 }
 
-export function editStudentSuccess(id) {
+export function editStudentSuccess(student) {
   return {
     type: '@student/EDIT_SUCCESS',
-    payload: { id },
+    payload: { student },
   };
 }
 
@@ -50,5 +50,19 @@ export function deleteStudentSuccess(id) {
   return {
     type: '@student/DELETE_SUCCESS',
     payload: { id },
+  };
+}
+
+export function createStudentRequest(student) {
+  return {
+    type: '@student/CREATE_REQUEST',
+    payload: { student },
+  };
+}
+
+export function createStudentSuccess(student) {
+  return {
+    type: '@student/CREATE_SUCCESS',
+    payload: { student },
   };
 }

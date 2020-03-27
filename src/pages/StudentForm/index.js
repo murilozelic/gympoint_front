@@ -2,9 +2,14 @@ import React from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { MdDone, MdChevronLeft } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import history from '~/services/history';
+
+import {
+  editStudentRequest,
+  createStudentRequest,
+} from '~/store/modules/student/actions';
 
 import { Container, Label } from './styles';
 
@@ -41,6 +46,8 @@ export default function StudentForm() {
   // para editar.
   const student = useSelector(state => state.student.student);
 
+  const dispatch = useDispatch();
+
   // Verifica se id veio dos params e popula a const student.
   // Faz um filtro no reducer procurando o student pelo id.
   // Como filter retorna um array, basta selecionar o primeiro elemento.
@@ -51,12 +58,17 @@ export default function StudentForm() {
       await schema.validate(data, {
         abortEarly: false,
       });
+
+      if (data.id) {
+        dispatch(editStudentRequest(data));
+      } else {
+        dispatch(createStudentRequest(data));
+      }
       // Validation passed
-      // console.log(data);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         // Validation failed
-        // console.log(err);
+        console.log(err); // eslint-disable-line
       }
     }
   }
@@ -84,13 +96,14 @@ export default function StudentForm() {
       <Form
         id="studentForm"
         initialData={initialData}
-        onSubmit={handleFormSubmit}
         schema={schema}
+        onSubmit={handleFormSubmit}
         onKeyPress={e => {
-          /* Evita de submit o Form com a tecla Enter nos inputs */
+          /*	 a tecla Enter nos inputs */
           if (e.key === 'Enter') e.preventDefault();
         }}
       >
+        <Input name="id" type="hidden" />
         <Label>NOME COMPLETO</Label>
         <Input name="name" placeholder="Nome Completo" />
         <Label>ENDEREÇO DE E-MAIL</Label>

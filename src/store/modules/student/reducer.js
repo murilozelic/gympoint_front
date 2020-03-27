@@ -20,6 +20,10 @@ export default function student(state = INITIAL_STATE, action) {
         draft.student = action.payload.student;
         break;
       }
+      case '@student/CREATE_SUCCESS': {
+        draft.students.push(action.payload.student);
+        break;
+      }
 
       default:
     }
