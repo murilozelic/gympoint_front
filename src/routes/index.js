@@ -32,7 +32,8 @@ export default function Routes() {
       <Route path="/enrollments/edit" component={EnrollmentForm} isPrivate />
 
       <Route path="/gymplans" exact component={GymPlans} isPrivate />
-      <Route path="/gymplans/edit" component={GymPlansForm} isPrivate />
+      <Route path="/gymplans/registration" component={GymPlansForm} isPrivate />
+      <Route path="/gymplans/:id/edit" component={GymPlansForm} isPrivate />
 
       <Route path="/support" component={Support} isPrivate />
       {/* Caso queira criar a funcionalidade de redirecionar o usuario para uma pagina

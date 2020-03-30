@@ -4,16 +4,16 @@ import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal);
 
 const Alert = {
-  delete: () => {
+  delete: ({ title, text, confirmButtonText, cancelButtonText }) => {
     return MySwal.fire({
-      title: 'Deletar estudante?',
-      text: 'Esta ação no poderá ser revertida!',
+      title,
+      text,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Sim, deletar!',
-      cancelButtonText: 'Cancelar',
+      confirmButtonText,
+      cancelButtonText,
       focusCancel: true,
     });
   },

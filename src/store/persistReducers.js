@@ -8,7 +8,7 @@ export default reducers => {
       key: 'gympoint',
       storage,
       /* Nome dos reducers que utilizarao o persist para armazenar as informacoes */
-      whitelist: ['auth', 'user', 'student'],
+      whitelist: ['auth', 'user', 'students', 'gymplans'],
     },
     reducers
   );

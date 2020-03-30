@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import Alert from '~/utils/Alert';
+import Alert from '~/util/Alert';
 
 import {
   loadStudentsRequest,
@@ -27,8 +27,15 @@ export default function Students() {
     dispatch(loadStudentRequest(id));
   }
 
-  function handleDeleteStudent(id) {
-    Alert.delete().then(result => {
+  function handleDeleteStudent(name, id) {
+    const alertParams = {
+      title: 'Deletar estudante?',
+      text: 'Esta ação no poderá ser revertida!',
+      confirmButtonText: 'Sim, deletar!',
+      cancelButtonText: 'Cancelar',
+    };
+
+    Alert.delete(alertParams).then(result => {
       if (result.value) {
         dispatch(deleteStudentRequest(id));
       }
@@ -93,7 +100,7 @@ export default function Students() {
                   <button
                     type="button"
                     className="deleteStudentGridBtn"
-                    onClick={() => handleDeleteStudent(s.id)}
+                    onClick={() => handleDeleteStudent(s.name, s.id)}
                   >
                     apagar
                   </button>
