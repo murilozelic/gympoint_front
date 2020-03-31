@@ -92,6 +92,15 @@ export const Container = styled.div`
         }
       }
     }
+
+    span {
+      color: #f00;
+      padding-left: 5px;
+      margin-top: 5px;
+      &:before {
+        content: '- ';
+      }
+    }
   }
 `;
 

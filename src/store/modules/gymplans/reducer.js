@@ -26,6 +26,10 @@ export default function gymplans(state = INITIAL_STATE, action) {
         break;
       }
       case '@gymplans/EDIT_SUCCESS': {
+        const { id } = action.payload.gymplan;
+        const planIndex = draft.gymplans.findIndex(gp => gp.id === id);
+
+        draft.gymplans[planIndex] = action.payload.gymplan;
         draft.loading = false;
         break;
       }
@@ -46,6 +50,19 @@ export default function gymplans(state = INITIAL_STATE, action) {
         break;
       }
       case '@gymplans/DELETE_FAIL': {
+        draft.loading = false;
+        break;
+      }
+      case '@gymplans/CREATE_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+      case '@gymplans/CREATE_SUCCESS': {
+        draft.gymplans.push(action.payload.gymplan);
+        draft.loading = false;
+        break;
+      }
+      case '@gymplans/CREATE_FAIL': {
         draft.loading = false;
         break;
       }

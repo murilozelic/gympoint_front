@@ -3,14 +3,12 @@ export function loadGymPlansRequest() {
     type: '@gymplans/LOAD_REQUEST',
   };
 }
-
 export function loadGymPlansSuccess(gymplans) {
   return {
     type: '@gymplans/LOAD_SUCCESS',
     payload: { gymplans },
   };
 }
-
 export function loadGymPlansFail() {
   return {
     type: '@gymplans/LOAD_FAIL',
@@ -23,14 +21,12 @@ export function editGymPlansRequest(gymplan) {
     payload: { gymplan },
   };
 }
-
 export function editGymPlansSuccess(gymplan) {
   return {
     type: '@gymplans/EDIT_SUCCESS',
     payload: { gymplan },
   };
 }
-
 export function editGymPlansFail() {
   return {
     type: '@gymplans/EDIT_FAIL',
@@ -52,5 +48,23 @@ export function deleteGymPlanSuccess(id) {
 export function deleteGymPlanFail() {
   return {
     type: '@gymplans/DELETE_FAIL',
+  };
+}
+
+export function createGymPlanRequest(gymplan) {
+  return {
+    type: '@gymplans/CREATE_REQUEST',
+    payload: { gymplan },
+  };
+}
+export function createGymPlanSuccess(gymplan) {
+  return {
+    type: '@gymplans/CREATE_SUCCESS',
+    payload: { gymplan },
+  };
+}
+export function createGymPlanFail() {
+  return {
+    type: '@gymplans/CREATE_FAIL',
   };
 }
