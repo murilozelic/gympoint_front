@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Input } from '@rocketseat/unform';
+import DatePicker from '~/components/DatePicker';
 
 export const Container = styled.div`
   width: 100%;
@@ -28,12 +30,9 @@ export const Container = styled.div`
         align-items: center;
         padding: 0 10px;
         border: 0;
-
         border-radius: 4px;
         margin-left: 20px;
 
-        font-family: 'Roboto', sans-serif;
-        font-size: 14px;
         font-weight: bold;
         color: #fff;
         svg {
@@ -54,53 +53,50 @@ export const Container = styled.div`
   form {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
     background: #fff;
     margin-top: 20px;
-    padding: 10px 30px 30px;
+    padding: 20px;
     border-radius: 4px;
 
     input {
       border-radius: 4px;
       border: 1px solid #eee;
-      padding: 10px;
 
       &::placeholder {
         color: #999;
-      }
-    }
-
-    div {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      & div {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        flex: 1;
-        padding-right: 20px;
-
-        &:last-child {
-          padding-right: 0;
-        }
-
-        input {
-          width: 100%;
-        }
       }
     }
   }
 `;
 
 export const Label = styled.label`
+  display: block;
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
   font-weight: bold;
   color: #444;
-  margin: 20px 0 10px;
+  margin: 10px 0;
+`;
 
-  width: 100%;
+export const FormBody = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const FormDatePicker = styled(DatePicker)`
+  font-family: 'Roboto', sans-serif;
+  color: #444;
+  text-align: center;
+  padding: 10px 0;
+`;
+
+export const FormInput = styled(Input)`
+  padding: 10px 0;
 `;

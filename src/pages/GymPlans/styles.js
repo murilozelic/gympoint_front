@@ -80,36 +80,66 @@ export const Container = styled.div`
     border-collapse: collapse;
     box-sizing: border-box;
 
-    tr td {
-      text-align: left;
-      font-size: 16px;
-      color: #666666;
-      padding: 20px 0px;
-      border-bottom: 1px solid #eee;
+    tbody,
+    thead {
+      tr td {
+        text-align: left;
+        font-size: 16px;
+        color: #666666;
+        padding: 20px 0px;
+        border-bottom: 1px solid #eee;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      tr th {
+        text-align: left;
+        font-size: 16px;
+        color: #444;
+      }
+
+      th,
+      td {
+        width: 40%;
+        max-width: 300px;
+        overflow: hidden;
+
+        /* Alinhar itens a partir da terceira coluna do header e dos itens */
+        &:nth-child(n + 3) {
+          text-align: center;
+          min-width: 40%;
+          min-width: 100px;
+        }
+      }
     }
 
-    tr:last-child td {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
+    tfoot {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      tr td {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        color: #444;
 
-    tr th {
-      text-align: left;
-      font-size: 16px;
-      color: #444;
-    }
+        span {
+          line-height: 24px;
+        }
 
-    th,
-    td {
-      width: 40%;
-      max-width: 300px;
-      overflow: hidden;
-
-      /* Alinhar itens a partir da terceira coluna do header e dos itens */
-      &:nth-child(n + 3) {
-        text-align: center;
-        min-width: 40%;
-        min-width: 100px;
+        button {
+          display: flex;
+          align-items: center;
+          border: 0;
+          margin: 0 10px;
+          background: transparent;
+        }
       }
     }
   }

@@ -1,15 +1,34 @@
 import React from 'react';
-import { Form, Input } from '@rocketseat/unform';
+import { Form } from '@rocketseat/unform';
 import { MdDone, MdChevronLeft } from 'react-icons/md';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import AsyncSelect from 'react-select/async';
+
+import {
+  searchStudentsRequest,
+  loadStudentsRequest,
+} from '~/store/modules/student/actions';
+
+// import * as Yup from 'yup';
 import history from '~/services/history';
 
-import { Container, Label } from './styles';
+import {
+  Container,
+  Label,
+  FormDatePicker,
+  FormBody,
+  FormInput,
+} from './styles';
 
 export default function EnrollmentForm() {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
   return (
     <Container>
       <header>
-        <strong>Edição de matrícula</strong>
+        <strong>{id ? 'Edição de matrícula' : 'Nova matrícula'} </strong>
         <div>
           <button
             type="button"
@@ -28,25 +47,30 @@ export default function EnrollmentForm() {
 
       <Form>
         <Label>ALUNO</Label>
-        <Input name="name" placeholder="Diego Fernandes" />
-        <div>
-          <div>
-            <Label>PLANO</Label>
-            <Input name="gymplan" />
-          </div>
+        <AsyncSelect name="name" placeholder="Escolha o aluno..." />
+
+        <Label>PLANO</Label>
+        <AsyncSelect name="gymplan" placeholder="Escolha o plano..." />
+
+        <FormBody>
           <div>
             <Label>DATA DE INÍCIO</Label>
-            <Input name="init_date" />
+            <FormDatePicker name="init_date" />
           </div>
           <div>
             <Label>DATA DE TÉRMINO</Label>
-            <Input name="end_date" />
+            <FormDatePicker name="end_date" />
           </div>
           <div>
             <Label>VALOR FINAL</Label>
-            <Input name="total_price" />
+            <FormInput
+              name="total_price"
+              type="number"
+              disabled
+              // value={plan.price && plan.duration ? plan.total_price : '0.00'}
+            />
           </div>
-        </div>
+        </FormBody>
       </Form>
     </Container>
   );

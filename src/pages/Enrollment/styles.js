@@ -47,54 +47,58 @@ export const Container = styled.div`
     }
   }
 
-  > div {
+  table {
+    display: block;
     width: 100%;
     height: 100%;
+    padding: 20px;
     background: #fff;
     border: 0;
     border-radius: 4px;
+    border-collapse: collapse;
     box-sizing: border-box;
-    padding: 30px;
 
-    table {
-      width: 100%;
-      height: 100%;
-      border-collapse: collapse;
+    thead {
+      th {
+        font-size: 16px;
+        text-align: center;
+        color: #666666;
 
+        &:first-child {
+          text-align: left;
+        }
+      }
+    }
+
+    tbody {
       tr td {
-        border-bottom: 1px solid #eee;
-        padding: 15px 0;
+        padding: 10px 40px;
+
+        button {
+          padding-left: 10px;
+          background: transparent;
+          border: 0;
+        }
+
+        &:first-child {
+          text-align: left;
+          padding-left: 0;
+        }
       }
 
       tr {
         &:last-child td {
-          border-bottom: 0;
+          border-bottom: none;
           padding-bottom: 0;
         }
+      }
 
-        td,
-        th {
-          font-size: 16px;
-          text-align: center;
-          color: #666666;
-
-          &:first-child {
-            text-align: left;
-          }
-        }
+      tr td {
+        text-align: left;
+        font-size: 16px;
+        color: #666666;
+        border-bottom: 1px solid #eee;
       }
     }
-  }
-
-  .editStudentGridBtn {
-    background: transparent;
-    border: 0;
-    color: #4d85ee;
-  }
-
-  .deleteStudentGridBtn {
-    background: transparent;
-    border: 0;
-    color: #de3b3b;
   }
 `;

@@ -14,16 +14,22 @@ import {
   createGymPlanFail,
 } from './actions';
 
-export function* gymplansLoadRequest() {
+export function* gymplansLoadRequest({ payload }) {
   try {
-    const response = yield call(api.get, 'gymplans');
+    // Se nao vier o page e resultsPerPage no payload, seta para 1 e 5 respec.
+    const { page = 1, resultsPerPage = 5 } = payload;
+
+    const response = yield call(
+      api.get,
+      `gymplans?page=${page}&resultsPerPage=${resultsPerPage}`
+    );
 
     if (response.data.status) {
       yield put(loadGymPlansSuccess([]));
     } else {
-      const gymplans = response.data;
+      const { totalPlans, plans } = response.data;
 
-      yield put(loadGymPlansSuccess(gymplans));
+      yield put(loadGymPlansSuccess(totalPlans, plans, page, resultsPerPage));
     }
   } catch (err) {
     yield put(loadGymPlansFail());
@@ -64,6 +70,7 @@ export function* gymplansDeleteRequest({ payload }) {
     }
   } catch (err) {
     yield put(deleteGymPlanFail());
+    console.tron.log(err.response);
     toast.error('Erro ao deletar o plano de academia');
   }
 }

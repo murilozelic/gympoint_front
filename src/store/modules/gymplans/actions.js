@@ -1,12 +1,18 @@
-export function loadGymPlansRequest() {
+export function loadGymPlansRequest(page, resultsPerPage) {
   return {
     type: '@gymplans/LOAD_REQUEST',
+    payload: { page, resultsPerPage },
   };
 }
-export function loadGymPlansSuccess(gymplans) {
+export function loadGymPlansSuccess(
+  totalPlans,
+  gymplans,
+  page,
+  resultsPerPage
+) {
   return {
     type: '@gymplans/LOAD_SUCCESS',
-    payload: { gymplans },
+    payload: { totalPlans, gymplans, page, resultsPerPage },
   };
 }
 export function loadGymPlansFail() {

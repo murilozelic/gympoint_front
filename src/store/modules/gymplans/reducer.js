@@ -1,7 +1,9 @@
 import { produce } from 'immer';
 
 const INITIAL_STATE = {
-  gymplans: [],
+  plans: [],
+  page: 1,
+  totalPlans: 1,
   loading: false,
 };
 
@@ -13,7 +15,9 @@ export default function gymplans(state = INITIAL_STATE, action) {
         break;
       }
       case '@gymplans/LOAD_SUCCESS': {
-        draft.gymplans = action.payload.gymplans;
+        draft.plans = action.payload.gymplans;
+        draft.page = action.payload.page;
+        draft.totalPlans = action.payload.totalPlans;
         draft.loading = false;
         break;
       }
@@ -27,9 +31,9 @@ export default function gymplans(state = INITIAL_STATE, action) {
       }
       case '@gymplans/EDIT_SUCCESS': {
         const { id } = action.payload.gymplan;
-        const planIndex = draft.gymplans.findIndex(gp => gp.id === id);
+        const planIndex = draft.plans.findIndex(gp => gp.id === id);
 
-        draft.gymplans[planIndex] = action.payload.gymplan;
+        draft.plans[planIndex] = action.payload.gymplan;
         draft.loading = false;
         break;
       }
@@ -43,9 +47,10 @@ export default function gymplans(state = INITIAL_STATE, action) {
       }
       case '@gymplans/DELETE_SUCCESS': {
         const { id } = action.payload;
-        const planIndex = draft.gymplans.findIndex(gp => gp.id === id);
+        const planIndex = draft.plans.findIndex(gp => gp.id === id);
+        draft.plans.splice(planIndex, 1);
 
-        draft.gymplans.splice(planIndex, 1);
+        draft.totalPlans -= 1;
         draft.loading = false;
         break;
       }
@@ -58,7 +63,7 @@ export default function gymplans(state = INITIAL_STATE, action) {
         break;
       }
       case '@gymplans/CREATE_SUCCESS': {
-        draft.gymplans.push(action.payload.gymplan);
+        draft.plans.push(action.payload.gymplan);
         draft.loading = false;
         break;
       }

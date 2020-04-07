@@ -29,7 +29,16 @@ export default function Routes() {
       <Route path="/students/:id/edit" component={StudentsForm} isPrivate />
 
       <Route path="/enrollments" exact component={Enrollment} isPrivate />
-      <Route path="/enrollments/edit" component={EnrollmentForm} isPrivate />
+      <Route
+        path="/enrollments/registration"
+        component={EnrollmentForm}
+        isPrivate
+      />
+      <Route
+        path="/enrollments/:id/edit"
+        component={EnrollmentForm}
+        isPrivate
+      />
 
       <Route path="/gymplans" exact component={GymPlans} isPrivate />
       <Route path="/gymplans/registration" component={GymPlansForm} isPrivate />

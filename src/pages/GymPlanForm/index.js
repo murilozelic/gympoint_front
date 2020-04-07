@@ -34,7 +34,7 @@ export default function GymPlanForm() {
   const dispatch = useDispatch();
 
   // pegar o gymplan do redux
-  const gymplans = useSelector(state => state.gymplans.gymplans);
+  const gymplans = useSelector(state => state.gymplans.plans);
 
   useEffect(() => {
     if (id) {

@@ -27,7 +27,7 @@ export default function Students() {
     dispatch(loadStudentRequest(id));
   }
 
-  function handleDeleteStudent(name, id) {
+  function handleDeleteStudent(id) {
     const alertParams = {
       title: 'Deletar estudante?',
       text: 'Esta ação no poderá ser revertida!',
@@ -100,7 +100,7 @@ export default function Students() {
                   <button
                     type="button"
                     className="deleteStudentGridBtn"
-                    onClick={() => handleDeleteStudent(s.name, s.id)}
+                    onClick={() => handleDeleteStudent(s.id)}
                   >
                     apagar
                   </button>
