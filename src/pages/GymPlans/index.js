@@ -22,7 +22,6 @@ export default function GymPlans() {
   const page = useSelector(state => state.gymplans.page);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [displayedGymplans, setDisplayedGymplans] = useState([]);
 
   // Alterar o valor abaixo para alterar a quantidade de resultados por pagina
   // usar const [resultsPerPage, setResultsPerPage] = useState(5) caso queira
@@ -56,23 +55,34 @@ export default function GymPlans() {
     });
   }
 
+  function handlePreviousPage() {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  }
+
+  function handleNextPage() {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  }
+
   useEffect(() => {
-    setDisplayedGymplans(gymplans);
+    // Condições para atualizar a lista de planos...
+    if (
+      // Planos mostrados na tela menor do que o resultados por paginas e
+      // pagina menor do que total de paginas ou total de planos retornados pelo
+      // backend igual a pagina * resultados por pagina.
+      gymplans.length < resultsPerPage &&
+      (page < totalPages || totalPlans === resultsPerPage * page)
+    ) {
+      dispatch(loadGymPlansRequest(currentPage, resultsPerPage));
+    }
+
+    if (gymplans.length === 0 && totalPlans !== 0)
+      setCurrentPage(currentPage - 1);
   }, [gymplans]);
 
   // Should fetch more data from backend?
   useEffect(() => {
     dispatch(loadGymPlansRequest(currentPage, resultsPerPage));
-  }, [currentPage]);
-
-  /*
-  useEffect(() => {
-    dispatch(loadGymPlansRequest(currentPage, resultsPerPage));
-  }, [currentPage, totalPlans]); */
-
-  /* useEffect(() => {
-    dispatch(loadGymPlansRequest(currentPage, resultsPerPage));
-  }, [currentPage]); */
+  }, [currentPage]); //eslint-disable-line
 
   return (
     <Container>
@@ -96,7 +106,7 @@ export default function GymPlans() {
         </thead>
         <tbody>
           {totalPlans > 0 ? (
-            displayedGymplans.map(gymplan => (
+            gymplans.map(gymplan => (
               <tr key={gymplan.id}>
                 <td>{gymplan.title}</td>
                 <td>
@@ -139,22 +149,12 @@ export default function GymPlans() {
           <tfoot>
             <tr>
               <td>
-                <button
-                  type="button"
-                  onClick={() =>
-                    currentPage > 1 && setCurrentPage(currentPage - 1)
-                  }
-                >
+                <button type="button" onClick={() => handlePreviousPage()}>
                   <MdNavigateBefore size={24} color="#444" />
                 </button>
 
                 <span>{`Página ${page} / ${totalPages}`}</span>
-                <button
-                  type="button"
-                  onClick={() =>
-                    currentPage < totalPages && setCurrentPage(currentPage + 1)
-                  }
-                >
+                <button type="button" onClick={() => handleNextPage()}>
                   <MdNavigateNext size={24} color="#444" />
                 </button>
               </td>

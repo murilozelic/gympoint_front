@@ -3,7 +3,7 @@ import { produce } from 'immer';
 const INITIAL_STATE = {
   plans: [],
   page: 1,
-  totalPlans: 1,
+  totalPlans: 0,
   loading: false,
 };
 

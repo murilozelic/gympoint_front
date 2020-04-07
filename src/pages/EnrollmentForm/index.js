@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form } from '@rocketseat/unform';
 import { MdDone, MdChevronLeft } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import AsyncSelect from 'react-select/async';
+import api from '~/services/api';
 
-import {
+/* import {
   searchStudentsRequest,
   loadStudentsRequest,
-} from '~/store/modules/student/actions';
+} from '~/store/modules/student/actions'; */
 
 // import * as Yup from 'yup';
 import history from '~/services/history';
@@ -23,7 +24,25 @@ import {
 
 export default function EnrollmentForm() {
   const { id } = useParams();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const [students, setStudents] = useState([]);
+  const [studentSelected, setStudentSelected] = useState(null);
+
+  const loadStudents = async searchStudent => {
+    const response = await api.get(`students?student=${searchStudent}`);
+
+    const foundStudents = response.data.status ? null : response.data;
+
+    setStudents(foundStudents);
+
+    return new Promise(resolve => {
+      resolve(foundStudents);
+    });
+  };
+
+  useEffect(() => {
+    loadStudents();
+  }, []);
 
   return (
     <Container>
@@ -47,7 +66,17 @@ export default function EnrollmentForm() {
 
       <Form>
         <Label>ALUNO</Label>
-        <AsyncSelect name="name" placeholder="Escolha o aluno..." />
+        <AsyncSelect
+          loadOptions={loadStudents}
+          defaultOptions
+          isClearable
+          options={students}
+          name="searchStudent"
+          value={studentSelected}
+          onChange={e => setStudentSelected(e)}
+          placeholder="Escolha o aluno..."
+          noOptionsMessage={() => 'Nenhum aluno encontrado'}
+        />
 
         <Label>PLANO</Label>
         <AsyncSelect name="gymplan" placeholder="Escolha o plano..." />
