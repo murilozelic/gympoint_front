@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Input } from '@rocketseat/unform';
 import DatePicker from '~/components/DatePicker';
 
 export const Container = styled.div`
@@ -97,6 +96,9 @@ export const FormDatePicker = styled(DatePicker)`
   padding: 10px 0;
 `;
 
-export const FormInput = styled(Input)`
+export const FormInput = styled.input`
+  font-family: 'Roboto', sans-serif;
+  color: #444;
+  text-align: center;
   padding: 10px 0;
 `;

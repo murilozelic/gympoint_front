@@ -41,12 +41,13 @@ export const Container = styled.div`
         font-size: 16px;
         color: #666;
       }
-
-      button {
-        background: transparent;
-        border: 0;
-        color: #4d85ee;
-      }
     }
   }
+`;
+
+export const FormButton = styled.button`
+  background: transparent;
+  border: 0;
+  color: ${props => (props.disabled ? '#ccc' : '#4d85ee')};
+  cursor: ${props => (props.disabled ? 'auto' : 'pointer')};
 `;

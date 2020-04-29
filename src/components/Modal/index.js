@@ -6,7 +6,7 @@ import { MdClose } from 'react-icons/md';
 
 import { Container, TextInput } from './styles';
 
-export default function Modal({ modalShow, onClose }) {
+export default function Modal({ modalShow, onClose, questionText }) {
   const [inputCharCount, setInputCharCount] = useState(0);
 
   return (
@@ -19,11 +19,7 @@ export default function Modal({ modalShow, onClose }) {
           </button>
         </header>
 
-        <span>
-          Olá pessoal da academia, gostaria de saber se quando acordar devo
-          ingerir batata doce e frango logo de primeira, preparar as marmitas e
-          lotar a geladeira? Dou um pico de insulina e jogo o hipercalórico?
-        </span>
+        <span>{questionText}</span>
         <strong>SUA RESPOSTA</strong>
         <Form>
           <TextInput
@@ -46,4 +42,5 @@ export default function Modal({ modalShow, onClose }) {
 Modal.propTypes = {
   modalShow: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  questionText: PropTypes.string.isRequired,
 };

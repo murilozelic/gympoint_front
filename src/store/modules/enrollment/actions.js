@@ -4,12 +4,10 @@ export function loadEnrollmentsRequest() {
   };
 }
 
-export function loadEnrollmentsSuccess(enrollments) {
-  return {
-    type: '@enrollment/LOAD_SUCCESS',
-    payload: { enrollments },
-  };
-}
+export const loadEnrollmentsSuccess = enrollments => ({
+  type: '@enrollment/LOAD_SUCCESS',
+  payload: { enrollments },
+});
 
 export function loadEnrollmentsFail() {
   return {

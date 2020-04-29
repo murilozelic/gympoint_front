@@ -12,6 +12,7 @@ export const Container = styled.div`
   margin: 0 auto;
 
   header {
+    max-width: 1000px;
     margin: 25px 120px;
     width: 100%;
     display: flex;
@@ -48,6 +49,7 @@ export const Container = styled.div`
   }
 
   table {
+    max-width: 1200px;
     display: block;
     width: 100%;
     height: 100%;

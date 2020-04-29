@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { darken } from 'polished';
 import { NavLink } from 'react-router-dom';
 
 export const Container = styled.div`
@@ -56,18 +55,18 @@ export const Container = styled.div`
       user-select: none;
     }
 
-    a {
+    button {
       background: transparent;
 
       border: 0;
       font-size: 14px;
       text-align: right;
-      color: #ee4d64;
+      color: #000;
 
       transition: color 0.3s;
 
       &:hover {
-        color: ${darken(0.08, '#ee4d64')};
+        color: #ee4d64;
       }
     }
   }

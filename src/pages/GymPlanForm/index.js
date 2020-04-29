@@ -100,7 +100,7 @@ export default function GymPlanForm() {
     }
   }
 
-  const InitialData = id ? plan : null;
+  const initialData = id ? plan : null;
 
   return (
     <Container>
@@ -124,7 +124,7 @@ export default function GymPlanForm() {
 
       <Form
         id="gymplanForm"
-        initialData={InitialData}
+        initialData={initialData}
         schema={schema}
         onSubmit={handleFormSubmit}
         onKeyPress={e => {

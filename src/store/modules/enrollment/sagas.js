@@ -3,12 +3,17 @@ import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { toast } from 'react-toastify';
 import api from '~/services/api';
+import history from '~/services/history';
 
 import {
   loadEnrollmentsSuccess,
   loadEnrollmentsFail,
   deleteEnrollmentSuccess,
   deleteEnrollmentFail,
+  createEnrollmentSuccess,
+  createEnrollmentFail,
+  editEnrollmentSuccess,
+  editEnrollmentFail,
 } from './actions';
 
 export function* loadEnrollments() {
@@ -35,14 +40,73 @@ export function* loadEnrollments() {
   }
 }
 
-export function* createEnrollment() {
+export function* createEnrollment({ payload }) {
   try {
-  } catch (err) {}
+    const { enrollment } = payload;
+
+    const response = yield call(api.post, 'enrollments', enrollment);
+
+    const {
+      id,
+      start_date,
+      active,
+      end_date,
+      price,
+      Student,
+      GymPlan,
+    } = response.data;
+
+    const newEnrollment = {
+      id,
+      active,
+      start_date,
+      end_date,
+      price,
+      Student,
+      GymPlan,
+    };
+
+    yield put(createEnrollmentSuccess(newEnrollment));
+
+    toast.success(`Matrícula criada com sucesso`);
+
+    history.push(`/enrollments`);
+  } catch (err) {
+    yield put(createEnrollmentFail());
+
+    toast.error(`Não foi possível criar cadastrar a matrícula`);
+  }
 }
 
-export function* editEnrollment() {
+export function* editEnrollment({ payload }) {
   try {
-  } catch (err) {}
+    const { id, student_id, plan_id, start_date } = payload.enrollment;
+
+    const enrollmentToEdit = { student_id, plan_id, start_date };
+
+    const response = yield call(api.put, `enrollments/${id}`, enrollmentToEdit);
+
+    const { active, end_date, price, Student, GymPlan } = response.data;
+
+    const edittedEnrollment = {
+      id,
+      active,
+      start_date,
+      end_date,
+      price,
+      Student,
+      GymPlan,
+    };
+
+    yield put(editEnrollmentSuccess(edittedEnrollment));
+
+    toast.success(`Matrícula atualizada com sucesso`);
+
+    history.push(`/enrollments`);
+  } catch (err) {
+    yield put(editEnrollmentFail());
+    toast.error(`Não foi possível editar esta matrícula`);
+  }
 }
 
 export function* deleteEnrollment({ payload }) {

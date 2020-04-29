@@ -19,10 +19,14 @@ export function* gymplansLoadRequest({ payload }) {
     // Se nao vier o page e resultsPerPage no payload, seta para 1 e 5 respec.
     const { page = 1, resultsPerPage = 5 } = payload;
 
-    const response = yield call(
+    /* const response = yield call(
       api.get,
       `gymplans?page=${page}&resultsPerPage=${resultsPerPage}`
-    );
+    ); */
+
+    const response = yield call(api.get, 'gymplans', {
+      params: { page, resultsPerPage },
+    });
 
     if (response.data.status) {
       yield put(loadGymPlansSuccess([]));

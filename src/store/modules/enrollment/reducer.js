@@ -1,11 +1,11 @@
 import { produce } from 'immer';
 
-const INITIAL_DATA = {
+const INITIAL_STATE = {
   enrollments: [],
   loading: false,
 };
 
-export default function enrollment(state = INITIAL_DATA, action) {
+export default function enrollment(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
       case '@enrollment/LOAD_REQUEST': {

@@ -1,10 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import logo from '~/assets/images/gympoint.png';
+
+import { signOut } from '~/store/modules/auth/actions';
 
 import { Container, StyledLink } from './styles';
 
 export default function Header() {
+  const dispatch = useDispatch();
+
   return (
     <Container>
       <nav>
@@ -19,8 +23,10 @@ export default function Header() {
       </nav>
 
       <div>
-        <strong>Diego Fernandes</strong>
-        <Link to="/">sair do sistema</Link>
+        <strong>Administrador</strong>
+        <button type="button" onClick={() => dispatch(signOut())}>
+          Logout
+        </button>
       </div>
     </Container>
   );

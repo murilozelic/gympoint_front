@@ -143,7 +143,9 @@ export function* searchStudentsRequest({ payload }) {
   try {
     const { student } = payload;
 
-    const response = yield call(api.get, `students?student=${student}`);
+    // const response = yield call(api.get, `students?student=${student}`);
+    // ou usar a seguinte sintaxe:
+    const response = yield call(api.get, `students`, { params: { student } });
 
     const foundStudents = response.data.status ? [] : response.data;
 

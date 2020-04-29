@@ -77,7 +77,7 @@ export default function GymPlans() {
 
     if (gymplans.length === 0 && totalPlans !== 0)
       setCurrentPage(currentPage - 1);
-  }, [gymplans]);
+  }, [currentPage, dispatch, gymplans, page, totalPages, totalPlans]);
 
   // Should fetch more data from backend?
   useEffect(() => {
