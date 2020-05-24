@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '~/services/api';
 
-import { Container, FormButton } from './styles';
+import { Container, FormButton, HelpOrder } from './styles';
 
 import Modal from '~/components/Modal';
 
@@ -44,7 +44,7 @@ export default function Support() {
   }
 
   async function loadHelpOrders() {
-    const response = await api.get('help-orders');
+    await api.get('help-orders');
 
     loadFilters();
   }
@@ -64,6 +64,9 @@ export default function Support() {
       <strong>Pedidos de Auxílio</strong>
       <ul>
         <span>ALUNO</span>
+        {helpOrders.map(helpOrder => (
+          <HelpOrder>{helpOrder}</HelpOrder>
+        ))}
         <li>
           <span>Murilo Zelic</span>
           <FormButton type="button" onClick={() => setModalShow(true)}>

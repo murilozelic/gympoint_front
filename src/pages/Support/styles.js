@@ -51,3 +51,7 @@ export const FormButton = styled.button`
   color: ${props => (props.disabled ? '#ccc' : '#4d85ee')};
   cursor: ${props => (props.disabled ? 'auto' : 'pointer')};
 `;
+
+export const HelpOrder = styled.div`
+  flex: 1;
+`;
